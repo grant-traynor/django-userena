@@ -462,9 +462,16 @@ def signin(request, auth_form=AuthenticationForm,
                                         kwargs={'username': user.username}))
 
     if not extra_context: extra_context = dict()
+    from pprint import pprint
+    pprint(vars(request))
+    try:
+      redir =  request.REQUEST.get(redirect_field_name)
+    except:
+      redir = "_self"
+
     extra_context.update({
         'form': form,
-        'next': request.REQUEST.get(redirect_field_name),
+        'next': redir,
     })
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
