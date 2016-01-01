@@ -454,8 +454,12 @@ def signin(request, auth_form=AuthenticationForm,
                 #send a signal that a user has signed in
                 userena_signals.account_signin.send(sender=None, user=user)
                 # Whereto now?
-                redirect_to = redirect_signin_function(
-                    request.REQUEST.get(redirect_field_name), user)
+                try:
+                    redir =  request.REQUEST.get(redirect_field_name)
+                except:
+                    redir = '/portfolios/' # Hack for now. Needs ot be fixed. qq:w
+
+                redirect_to = redirect_signin_function(redir, user)
                 return HttpResponseRedirect(redirect_to)
             else:
                 return redirect(reverse('userena_disabled',
