@@ -462,8 +462,6 @@ def signin(request, auth_form=AuthenticationForm,
                                         kwargs={'username': user.username}))
 
     if not extra_context: extra_context = dict()
-    from pprint import pprint
-    pprint(vars(request))
     try:
       redir =  request.REQUEST.get(redirect_field_name)
     except:
